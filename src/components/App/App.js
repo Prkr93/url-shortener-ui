@@ -13,11 +13,12 @@ export class App extends Component {
   }
 
   passUrls = (data) => {
-    console.log(data)
+    this.setState({urls: data[0].urls})
   }
 
   componentDidMount() {
-    Promise.all([getUrls()]).then(data => this.passUrls(data))
+    Promise.all([getUrls()])
+      .then((data) => this.passUrls(data))
   }
 
   render() {
