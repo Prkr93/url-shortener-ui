@@ -12,7 +12,12 @@ export class App extends Component {
     }
   }
 
+  passUrls = (data) => {
+    console.log(data)
+  }
+
   componentDidMount() {
+    Promise.all([getUrls()]).then(data => this.passUrls(data))
   }
 
   render() {
