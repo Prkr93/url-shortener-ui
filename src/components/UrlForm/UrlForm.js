@@ -20,7 +20,16 @@ class UrlForm extends Component {
   }
 
   clearInputs = () => {
+    this.submitUrl()
     this.setState({title: '', urlToShorten: ''});
+  }
+
+  submitUrl = () => {
+    let url = {
+      long_url: this.state.urlToShorten,
+      title: this.state.title
+    }
+    this.props.sendUrl(url);
   }
 
   render() {

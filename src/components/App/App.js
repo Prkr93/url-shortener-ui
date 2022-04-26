@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls } from '../../apiCalls';
+import { getUrls, postUrls } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -13,7 +13,11 @@ export class App extends Component {
   }
 
   passUrls = (data) => {
-    this.setState({urls: data[0].urls})
+    this.setState({urls: data[0].urls});
+  }
+
+  sendUrl = (url) => {
+    postUrls(url);
   }
 
   componentDidMount() {
@@ -21,12 +25,13 @@ export class App extends Component {
       .then((data) => this.passUrls(data))
   }
 
+
   render() {
     return (
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm sendUrl={this.sendUrl} />
         </header>
 
         <UrlContainer urls={this.state.urls}/>
