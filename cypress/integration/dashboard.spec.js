@@ -1,5 +1,9 @@
 describe('Dashboard', () => {
   beforeEach(() => {
+    cy.intercept('POST', 'http://localhost:3001/api/v1/urls', {
+      fixture: 'postedUrl.json'
+    }).as('postUrl')
+
     cy.intercept('http://localhost:3001/api/v1/urls', {
       fixture: 'urls.json'
     }).as('getUrls')
@@ -33,4 +37,13 @@ describe('Dashboard', () => {
     })
   });
 
+
+  it('should render the new shortened URL onto the page when a user fills out and submits the form', () => {
+    cy.get('form input:first').type('Awesome photo')
+    cy.get('form input:last').type('https://images.unsplash.com/photo...')
+
+    cy.get('form button').click()
+    cy.get('.url').should('have.length', 2)
+    cy.get('.url:last a').contains('http://localhost:3001/useshorturl/2')
+  });
 })
