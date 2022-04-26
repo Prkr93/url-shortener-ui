@@ -46,4 +46,9 @@ describe('Dashboard', () => {
     cy.get('.url').should('have.length', 2)
     cy.get('.url:last a').contains('http://localhost:3001/useshorturl/2')
   });
+
+  it.skip('should render an error if an input is empty on submit', () => {
+    cy.get('form button').click()
+    cy.get('.error').contains('Please fill out both fields.')
+  })
 })
