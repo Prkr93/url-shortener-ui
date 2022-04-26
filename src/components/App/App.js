@@ -17,7 +17,10 @@ export class App extends Component {
   }
 
   sendUrl = (url) => {
-    postUrls(url);
+    postUrls(url).then(res => {
+      this.setState({urls: [...this.state.urls, res]})
+    })
+
   }
 
   componentDidMount() {
