@@ -9,14 +9,28 @@ describe('Dashboard', () => {
 
   it('should display the page title and the existing shortened URLs', () => {
     cy.get('h1').contains('URL Shortener')
+    cy.get('.url').within(url=> {
+      cy.get('h3').contains('Awesome photo')
+      cy.get('a').contains('http://localhost:3001/useshorturl/1')
+      cy.get('p').contains('https://images.unsplash.com/photo-1531898418865-480b7090470f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80')
+    });
   });
 
-  it.skip('should display the Form with the proper inputs', () => {
-
+  it('should display the Form with the proper inputs', () => {
+    cy.get('form').within(form => {
+      cy.get('input').first().invoke('attr', 'name').should('eq', 'title')
+      cy.get('input').last().invoke('attr', 'name').should('eq', 'urlToShorten')
+    });
   });
 
-  it.skip('should be able to fill out the form, and the inputs reflect the typed values', () => {
+  it('should be able to fill out the form, and the inputs reflect the typed values', () => {
+    cy.get('form input:first').type('Test Title')
+    cy.get('form input:last').type('testurl.com/testme')
 
+    cy.get('form').within(form => {
+      cy.get('input').first().invoke('attr', 'value').should('eq', 'Test Title')
+      cy.get('input').last().invoke('attr', 'value').should('eq', 'testurl.com/testme')
+    })
   });
 
 })
